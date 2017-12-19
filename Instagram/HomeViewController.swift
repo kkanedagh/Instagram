@@ -120,6 +120,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // セル内のボタンのアクションをソースコードで設定する
         cell.likeButton.addTarget(self, action:#selector(handleButton(sender:event:)), for:  UIControlEvents.touchUpInside)
+        cell.commentButton.addTarget(self, action:#selector(handleCommentButton(sender:event:)), for:  UIControlEvents.touchUpInside)
         
         return cell
     }
@@ -134,7 +135,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
     }
     
-    // セル内のボタンがタップされた時に呼ばれるメソッド
+    // セル内のlikeボタンがタップされた時に呼ばれるメソッド
     func handleButton(sender: UIButton, event:UIEvent) {
         print("DEBUG_PRINT: likeボタンがタップされました。")
         
@@ -171,6 +172,24 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    // セル内のCommentボタンがタップされた時に呼ばれるメソッド
+    func handleCommentButton(sender: UIButton, event:UIEvent) {
+        print("DEBUG_PRINT: commentボタンがタップされました。")
+        
+        // タップされたセルのインデックスを求める
+        let touch = event.allTouches?.first
+        let point = touch!.location(in: self.tableView)
+        let indexPath = tableView.indexPathForRow(at: point)
+        
+        // 配列からタップされたインデックスのデータを取り出す
+        let postData = postArray[indexPath!.row]
+        
+        //PostCommentViewControllerに画面遷移
+        let PostCommentViewController = self.storyboard?.instantiateViewController(withIdentifier: "Comment") as! PostCommentViewController
+        PostCommentViewController.postData = postData
+        present(PostCommentViewController, animated: true, completion: nil)
+        
+    }
 
     /*
     // MARK: - Navigation
