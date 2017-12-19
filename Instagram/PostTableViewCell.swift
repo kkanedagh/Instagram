@@ -52,15 +52,12 @@ class PostTableViewCell: UITableViewCell {
         }
         
         //コメント表示
-        //コメントがない場合は何もしない
-        if postData.comment.count > 0 {
-            var commentLine = ""
-            //コメント表示用にテキスト整形
-            for num in postData.comment {
-                commentLine.append("\(num)\n")
-            }
-            self.commentLabel.text = "\(commentLine)"
+        var commentLine = ""
+        //コメント表示用にテキスト整形
+        for num in postData.comment {
+            commentLine.append("\(num)\n")
         }
+        self.commentLabel.text = "\(commentLine)"
     }
     
 }
